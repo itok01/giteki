@@ -7,17 +7,17 @@ pub async fn get(query: &RequestParameters) -> Result<Response, Box<dyn std::err
     let resp = client.get(endpoint::LIST).query(query).send().await?;
 
     //let status = resp.status();
+
     let text: String = resp.text().await?;
+
+    // --- レスポンスのJSONの形式がおかしいため修正 ---
     let text = text.replace(r#""giteki":[{"#, r#""giteki":["#);
     let text = text.replace(r#""gitekiInfo":{"#, "{");
     let text = text.replace("}},{{", "},{");
     let text = text.replace("}}]", "}]");
-    println!("{}", text);
+    // --- レスポンスのJSONの形式がおかしいため修正 ---
 
-    let r = serde_json::from_str::<Response>(text.as_str())?;
-    println!("{:?}", r.giteki_information.last_update_date);
-
-    Ok(r)
+    Ok(serde_json::from_str(text.as_str())?)
 }
 
 #[tokio::test]
