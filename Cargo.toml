@@ -1,0 +1,18 @@
+[package]
+name = "giteki"
+version = "0.1.0"
+authors = ["itok01 <contact@itok01.com>"]
+edition = "2018"
+description = "技術基準適合証明等を受けた機器の検索のためのWeb-APIをRustで扱うためのラッパ"
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/itok01/giteki"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest = { version = "0.10", features = ["json"] }
+tokio = { version = "0.2", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde-aux = "0.6"
