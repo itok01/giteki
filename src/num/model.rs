@@ -169,11 +169,11 @@ pub struct GitekiInformation {
         rename = "totalCount",
         deserialize_with = "deserialize_number_from_string"
     )]
-    pub total_count: usize,
+    pub total_count: u32,
 }
 
 #[derive(Deserialize)]
 pub struct Giteki {
     #[serde(deserialize_with = "deserialize_number_from_string")]
-    pub count: usize,
+    pub count: u32,
 }

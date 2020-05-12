@@ -198,7 +198,7 @@ impl RequestParameters {
 }
 
 /// 一覧詳細情報取得APIのレスポンス
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 pub struct Response {
     #[serde(rename = "gitekiInformation")]
     pub giteki_information: GitekiInformation,
@@ -206,7 +206,7 @@ pub struct Response {
     pub giteki: Vec<GitekiInfo>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 pub struct GitekiInformation {
     #[serde(rename = "lastUpdateDate")]
     pub last_update_date: String,
@@ -214,13 +214,16 @@ pub struct GitekiInformation {
         rename = "totalCount",
         deserialize_with = "deserialize_number_from_string"
     )]
-    pub total_count: usize,
+    pub total_count: u32,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Serialize)]
 pub struct GitekiInfo {
-    #[serde(deserialize_with = "deserialize_number_from_string")]
-    pub no: usize,
+    #[serde(
+        deserialize_with = "deserialize_number_from_string",
+        serialize_with = "bson::compat::u2f::serialize"
+    )]
+    pub no: u32,
     #[serde(rename = "techCode")]
     pub tech_code: String,
     pub number: String,
